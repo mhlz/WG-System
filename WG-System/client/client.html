@@ -66,7 +66,7 @@
 
 <template name="shoppingTour">
 	<div class="shoppingTour" id="shoppingTour_{{_id}}">
-		<span class="updatingTime" data-tourId="{{_id}}" data-time="{{time}}">{{time}}</span> {{place}} ({{user}} geht){{#if isDoneBy}}&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" class="deleteShoppingAnnouncement" value="Löschen">{{/if}}<br>
+		{{user}} geht/ging <span class="updatingTime" data-tourId="{{_id}}" data-time="{{time}}">{{time}}</span> zu {{place}}. {{#if isDoneBy}}&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" class="deleteShoppingAnnouncement" value="Löschen">{{/if}}<br>
 		<div id="list_shoppingTour_{{shoppingTourId}}" class="list">
 			<ol>
 			{{#each listItems}}

@@ -19,7 +19,8 @@ Meteor.methods({
 		if(Meteor.user().username == "") {
 			return;
 		}
-		var time = Date.time();
+		var time = new Date();
+		time = time.getTime();
 		if(inTime == "in 15 Minuten") {
 			time += 15 * 60 * 1000;
 		} else if(inTime == "in 30 Minuten") {
