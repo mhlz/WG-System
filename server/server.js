@@ -63,12 +63,11 @@ Meteor.methods({
 });
 
 Meteor.startup(function() {
-	var atime = new Date();
+	/*var atime = new Date();
 	atime = atime.getTime();
 	shoppingTours.insert({place: "(vor 40 min)", user: "Mischa", time: atime - 40 * 60 * 1000});
 	shoppingTours.insert({place: "(vor 29 min)", user: "Mischa", time: atime - 29 * 60 * 1000});
 	shoppingTours.insert({place: "(vor 1 min)", user: "Mischa", time: atime - 1 * 60 * 1000});
 	shoppingTours.insert({place: "(jetzt)", user: "Mischa", time: atime});
-	shoppingTours.insert({place: "(in 40 stunden)", user: "Mischa", time: atime + 40 * 60 * 60 * 1000});
-	
+	shoppingTours.insert({place: "(in 40 stunden)", user: "Mischa", time: atime + 40 * 60 * 60 * 1000});*/
 });
