@@ -85,6 +85,12 @@ Template.shoppingTour.showLessButton = function() {
 	return Session.get("lookingAtTour") == this._id && shoppingItems.find({tour: this._id}).count() > 2;
 };
 
+Template.shoppingTour.inFuture = function() {
+	var atime = new Date();
+	atime = atime.getTime();
+	return atime < this.time;
+};
+
 Template.shoppingList.rendered = function() {
 	updateTimes();
 	Meteor.setInterval(updateTimes, 1000);

@@ -1,5 +1,5 @@
 <head>
-  <title>Die beste WG ever</title>
+	<title>Die beste WG ever</title>
 </head>
 
 <body>
@@ -12,10 +12,8 @@
 			</tr>
 			<tr>
 				<td>
-					{{> shoppingList}}
-				</td>
-				<td valign="top">
 					{{> announceDialog}}
+					{{> shoppingList}}
 				</td>
 			</tr>
 		</table>
@@ -66,7 +64,7 @@
 
 <template name="shoppingTour">
 	<div class="shoppingTour" id="shoppingTour_{{_id}}">
-		{{user}} geht/ging <span class="updatingTime" data-tourId="{{_id}}" data-time="{{time}}">{{time}}</span> zu {{place}}. {{#if isDoneBy}}&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" class="deleteShoppingAnnouncement" value="Löschen">{{/if}}<br>
+		{{user}} {{#if inFuture}}geht{{else}}ging{{/if}} <span class="updatingTime" data-tourId="{{_id}}" data-time="{{time}}">{{time}}</span> zu {{place}}. {{#if isDoneBy}}&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" class="deleteShoppingAnnouncement" value="Löschen">{{/if}}<br>
 		<div id="list_shoppingTour_{{shoppingTourId}}" class="list">
 			<ol>
 			{{#each listItems}}
