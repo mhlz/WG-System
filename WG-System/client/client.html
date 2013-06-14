@@ -6,32 +6,16 @@
 	{{> loginArea}}
 	{{#if currentUser}}
 	<div class="top_left">
-		<table border="0">
-			<tr>
-				<td colspan="2"><h1>Einkäufe</h1></td>
-			</tr>
-			<tr>
-				<td>
-					{{> announceDialog}}
-					{{> shoppingList}}
-				</td>
-			</tr>
-		</table>
+		<h1>Einkäufe</h1>
+		{{> announceDialog}}
+		{{> shoppingList}}
 	</div>
 	{{/if}}
 </body>
 
 <template name="announceDialog">
-	{{#if showAnnounceShoppingDialog}}
-		{{> announceShoppingDialog}}
-	{{else}}
-		<input class="announceShoppingDialog" type="button" value="Einkauf ankündigen">
-	{{/if}}
-</template>
-
-<template name="announceShoppingDialog">
-	<div class="dialog">
-		Ich gehe <select size="1" id="timeSelect">
+		<div class="dialog">
+			Ich gehe <select class="select" size="1" id="timeSelect">
 			<option>JETZT</option>
 			<option>in 15 Minuten</option>
 			<option>in 30 Minuten</option>
@@ -44,8 +28,8 @@
 			<option>übermorgen</option>
 			<option>in 3 Tagen</option>
 			<option>in 1 Woche</option>
-		</select> zum <input id="nameOfPlace" type="text" placeholder="Name des Ladens...">. Was soll ich mitbringen?<br>
-		<input class="acceptAnnouncementButton" type="button" value="Senden!"><input class="cancelAnnouncementButton" type="button" value="Abbrechen">
+		</select> zum <input class="text" id="nameOfPlace" type="text" placeholder="Name des Ladens...">.<br> Was soll ich mitbringen?<br>
+		<input class="acceptAnnouncementButton button" type="button" value="Senden!">
 	</div>
 </template>
 
@@ -64,7 +48,7 @@
 
 <template name="shoppingTour">
 	<div class="shoppingTour" id="shoppingTour_{{_id}}">
-		{{user}} {{#if inFuture}}geht{{else}}ging{{/if}} <span class="updatingTime" data-tourId="{{_id}}" data-time="{{time}}">{{time}}</span> zu {{place}}. {{#if isDoneBy}}&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" class="deleteShoppingAnnouncement" value="Löschen">{{/if}}<br>
+		{{user}} {{#if inFuture}}geht{{else}}ging{{/if}} <span class="updatingTime" data-tourId="{{_id}}" data-time="{{time}}">{{time}}</span> zu {{place}}. {{#if isDoneBy}}&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" class="deleteShoppingAnnouncement button" value="Löschen">{{/if}}<br>
 		<div id="list_shoppingTour_{{shoppingTourId}}" class="list">
 			<ol>
 			{{#each listItems}}
@@ -72,14 +56,14 @@
 			{{/each}}
 			{{#if showDots}}<li style="list-style: none"><a href="javascript://" class="showMore">...</a></li>{{/if}}
 			{{#if showLessButton}}&nbsp;<a href="javascript://" class="showLess">^</a>{{/if}}
-			<li value="{{getNewListNumber}}">...Ich hätte gerne <input id="addNewItemName_{{_id}}" class="addNewItemName" type="text" placeholder="Etwas von {{place}}...">. Es kostet <input id="addNewItemPrice_{{_id}}" class="addNewItemPrice" type="text" placeholder="Was kostet es?">.<br>
-				<input data-shoppingTourId="{{_id}}" type="button" class="addNewItem" value="Absenden">&nbsp;<input class="clearItems" type="button" value="Löschen"></li>
+			<li value="{{getNewListNumber}}">...Ich hätte gerne <input id="addNewItemName_{{_id}}" class="addNewItemName text" type="text" placeholder="Etwas von {{place}}...">. Es kostet <input id="addNewItemPrice_{{_id}}" class="addNewItemPrice text" type="text" placeholder="...">.<br>
+				<input data-shoppingTourId="{{_id}}" type="button" class="addNewItem button" value="Absenden"></li>
 			</ol>
 		</div>
 	</div>
 </template>
 
 <template name="listItem">
-	<li>{{itemName}} ({{itemPrice}}, gewünscht von {{orderedBy}}) {{#if isOrderedBy}}<input class="deleteShoppingItem" type="button" value="Entfernen">{{/if}}
+	<li>{{itemName}} ({{itemPrice}}, gewünscht von {{orderedBy}}) {{#if isOrderedBy}}<input class="deleteShoppingItem button" type="button" value="Entfernen">{{/if}}
 	</li>
 </template>

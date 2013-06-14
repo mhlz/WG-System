@@ -114,10 +114,6 @@ Template.shoppingTour.events({
 	
 	"click .showLess": function() {
 		Session.set("lookingAtTour", "");
-	},
-	
-	"click .clearItems": function() {
-		clearAllNewItems();
 	}
 });	
 
@@ -127,24 +123,16 @@ Template.listItem.events({
 	}
 });
 
-Template.announceDialog.showAnnounceShoppingDialog = function() {
-	return Session.get("showShoppingDialog");
-};
-
 Template.announceDialog.events({
-	"click .announceShoppingDialog": function() {
-		Session.set("showShoppingDialog", true);
-	},
-	"click .cancelAnnouncementButton": function() {
-		Session.set("showShoppingDialog", false);
-	},
 	"click .acceptAnnouncementButton": function() {
 		Meteor.call("insertShoppingAnnouncement", document.getElementById("nameOfPlace").value, document.getElementById("timeSelect").value);
-		Session.set("showShoppingDialog", false);
 	}
 });
-
 
 Template.listItem.isOrderedBy = function() {
 	return this.orderedBy == Meteor.user().username;
 };
+
+Meteor.startup(function() {
+	$("body").height(window.innerHeight);
+});
