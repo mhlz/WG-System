@@ -1,0 +1,24 @@
+/* CSS declarations go here */
+
+
+div.selected {
+	background-color: grey;
+}
+
+
+.warning {
+	background-color: red;
+}
+
+div.objectList {
+
+}
+
+div.addItem {
+    border-bottom: solid 0px #AEAEAE !important;
+    margin-bottom: 0px !important;
+}
+
+div.owner {
+    padding-bottom: 5px;
+}

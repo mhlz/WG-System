@@ -1,0 +1,31 @@
+/* CSS declarations go here */
+
+h1 {
+	margin-left: 12px;
+}
+
+div.top_left {
+	border-right: 1px solid white;
+	
+	height: 100%;
+	width: 33%;
+	
+	position: relative;
+}
+
+div.dialog {
+	border-bottom: 1px solid white;
+
+	margin: 15px;
+}
+
+div.shoppingTour {
+	padding-top: 15px;
+	padding-left: 5px;
+	
+	border-bottom: 1px solid white;
+}
+
+input.addNewItemPrice {
+	width: 30px !important;
+}

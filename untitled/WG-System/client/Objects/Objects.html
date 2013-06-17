@@ -1,0 +1,91 @@
+
+
+<template name = "Objects">
+    <h1>Objekte</h1>
+    <div class = "list objectList" >
+        {{> newObject}}
+        {{#each objects}}
+            {{> oneObject}}
+        {{else}}
+            There are no Objects.
+        {{/each}}
+    </div>
+</template>
+
+
+<template name = "newObject">
+    <div class = " addItem listItem {{selected}}">
+        <input class = "add button" id = "addObject" type = "submit" value = "{{submit}}" style = "float:right;">
+
+        <input class = "undo button" id = "undo" type = "submit" value = "undo" style = "float:right; display: {{undo}};">
+
+        <div class = "input" style="display: {{visible}};">
+            <input class = "text" id = "name" placeholder = "name">
+            <input class = "text" id = "price" placeholder = "price">
+        </div>
+    </div>
+</template>
+
+
+<template name = "oneObject">
+    <div class = "listItem {{selected}}">
+        <div class = ""  style = "display: {{visible_unedit}}">
+            {{name}} ({{price}}€) <span class = "warning"> {{warning}} </span>
+            <div id = "buttons_{{_id}}"  style = "display: {{visible}}; float:right" >
+                <input class = "button edit" type = "submit" value = "edit">
+            </div>
+
+            <div id = "owners_{{_id}}" class = "owners list" style = "display: {{visible}};" >
+                <div class = "listItem"></div>
+                {{#each owners}}
+                    <div class = "owner listItem">
+                        {{> owner}}
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+
+        <div class = "" style="display: {{visible_edit}}">
+            <input class = "text" id = "name_{{_id}}" name = "name" value = "{{name}}"> </br>
+            <input class = "text" id = "price_{{_id}}" name = "price" value = "{{price}}">
+
+            <div id = "buttons_{{_id}}" style = "float:right;">
+                <input class = "button edit" type = "submit" value = "save">
+                <input class = "button remove" id = "removeObject" type = "submit" value = "remove">
+            </div>
+            <div id = "owners_{{_id}}" class = "owners list" >
+                <div class = "listItem"></div>
+                {{#each owners}}
+                    <div class = "owner listItem">
+                        {{> owner_edit}}
+                    </div>
+                {{/each}}
+                {{> addOwner}}
+            </div>
+        </div>
+    </div>
+
+</template>
+
+
+
+<template name = "addOwner">
+    <div class = "owners listItem">
+        <input class = "text" id = "nameOwner_{{_id}}" name = "name" placeholder = "name"></br>
+        <input class = "text" id = "moneyOwner_{{_id}}" name = "money" placeholder = "money">
+        <input type = "submit" class = "button add" value = "add">
+    </div>
+</template>
+
+
+<template name = "owner_edit">
+    <input class = "button remove right" id = "remove" type = "submit" value = "remove">
+    <input class = "button save right" type = "submit" value = "save">
+    <input class = "text" id = "name_{{_id}}" name = "name"  placeholder = "name" value = "{{name}}"> <br>
+    <input class = "text" id = "money_{{_id}}" name = "money"  placeholder = "money" value = "{{money}}">
+</template>
+
+
+<template name = "owner">
+    {{name}}: {{money}}€ ({{percentage}}%)
+</template>
