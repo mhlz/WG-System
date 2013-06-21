@@ -5,26 +5,49 @@
         {{> announceDialog}}
         {{> shoppingList}}
     </div>
+    <h1>Sachen</h1>
+    <div class = "list">
+        {{> newItem}}
+        {{#each items}}
+            {{> item}}
+        {{/each}}
+    </div>
 </template>
 
 <template name="announceDialog">
-		<div class="listItem">
-			Ich gehe <select class="select" size="1" id="timeSelect">
-			<option>JETZT</option>
-			<option>in 15 Minuten</option>
-			<option>in 30 Minuten</option>
-			<option>in 45 Minuten</option>
-			<option>in 60 Minuten</option>
-			<option>in 2 Stunden</option>
-			<option>in 4 Stunden</option>
-			<option>in 5 Stunden</option>
-			<option>morgen</option>
-			<option>übermorgen</option>
-			<option>in 3 Tagen</option>
-			<option>in 1 Woche</option>
-            <input class="acceptAnnouncementButton button right" type="button" value="Senden!">
-		</select> zum <input class="text" id="nameOfPlace" type="text" placeholder="Name des Ladens...">.
-	</div>
+    <div  class = "listItem addItem {{selected}}">
+        <input class="acceptAnnouncementButton button right" type="submit" value="{{addButton}}">
+        <div id = "newTour" class = "{{selected}}">
+            Ich gehe
+            <select class="select" size="1" id="timeSelect">
+                <option>JETZT</option>
+                <option>in 15 Minuten</option>
+                <option>in 30 Minuten</option>
+                <option>in 45 Minuten</option>
+                <option>in 60 Minuten</option>
+                <option>in 2 Stunden</option>
+                <option>in 4 Stunden</option>
+                <option>in 5 Stunden</option>
+                <option>morgen</option>
+                <option>übermorgen</option>
+                <option>in 3 Tagen</option>
+                <option>in 1 Woche</option>
+            </select>
+            zum
+            {{> placeSelect}}
+        </div>
+     </div>
+</template>
+
+
+<template name = "placeSelect">
+    <select class="select" size="1" id="place">
+        <option></option>
+        <option>ALDI</option>
+        <option>REWE</option>
+        <option>EDEKA</option>
+        <option>LIDL</option>
+    </select>
 </template>
 
 <template name="shoppingList">
@@ -35,28 +58,41 @@
 
 
 <template name="shoppingTour">
-	<div class="shoppingTour listItem" id="shoppingTour_{{_id}}">
+	<div class="shoppingTour listItem  {{selected}}" id="shoppingTour_{{_id}}">
 		{{user}} {{#if inFuture}}geht{{else}}ging{{/if}} <span class="updatingTime" data-tourId="{{_id}}" data-time="{{time}}">{{time}}</span> zu {{place}}. {{#if isDoneBy}}&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" class="deleteShoppingAnnouncement button remove right" value="Löschen">{{/if}}<br>
 		<div id="list_shoppingTour_{{shoppingTourId}}" class="list">
         Insgesamt: {{price}}€
-			<ol>
+			<div class = "list">
 			{{#each listItems}}
-				{{> listItem}}
+				{{> item}}
 			{{/each}}
-			{{#if showDots}}<li class = "listItem" style="list-style: none"><input type = "submit" class = "button showMore" value = "Mehr anzeigen"></li>{{/if}}
+			{{#if showDots}}<div class = "listItem" style="list-style: none"><input type = "submit" class = "button showMore" value = "Mehr anzeigen"></div>{{/if}}
 			{{#if showLessButton}}&nbsp;<input  type = "submit" class="button showLess" value= "Weniger anzeigen">{{/if}}
-            <li value="+" class = "listItem">
-                <input data-shoppingTourId="{{_id}}" type="button" class="addNewItem button right" value="Absenden">
-                Füge <input id="addNewItemName_{{_id}}" class="addNewItemName text" type="text" placeholder="Etwas von {{place}}..."> für <input id="addNewItemPrice_{{_id}}" class="addNewItemPrice text" type="text" placeholder="Euro"> hinzu.<br>
-				</li>
-			</ol>
+            {{> newItem ItemArgument }}
 		</div>
 	</div>
 </template>
 
-<template name="listItem">
-	<li class = "listItem">
+<template name = "item">
+	<div class = "listItem {{done}}">
         <input class="deleteShoppingItem button remove right" type="button" value="Entfernen">
-        {{itemName}} ({{itemPrice}}€ , gewünscht von {{orderedBy}}) {{#if isOrderedBy}}{{/if}}
-	</li>
+        {{#if showDoneButton}}
+            <input class="doneShoppingItem button undo right" type="button" value="Erledigt">
+        {{/if}}
+        {{itemName}} ({{itemPrice}}€ ,von {{orderedBy}}, {{itemPlace}})
+	</div>
+</template>
+
+
+<template name = "newItem">
+    Füge  <input id="addNewItemTimes" class="addNewItemTime text" type="text" placeholder="X" style="width:10px;"> mal
+    <input id="addNewItemName" class="addNewItemName text" type="text" placeholder="Etwas">
+    für <input id="addNewItemPrice" class="addNewItemPrice text" type="text" placeholder="Euro">
+    zu
+    {{#with placeHolder}}
+        <span id="place" value="{{place}}">{{place}}</span>
+    {{else}}
+        {{> placeSelect }}
+    {{/with}}
+    <input type="button" class="addNewItem button" value="hinzu">.<br>
 </template>

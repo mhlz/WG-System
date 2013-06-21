@@ -26,6 +26,18 @@ div.shoppingTour {
 	border-bottom: 1px solid white;
 }
 
+.done {
+    text-decoration:line-through;
+}
+
+#newTour {
+    display: none;
+}
+
+#newTour.selected{
+    display: block;
+}
+
 input.addNewItemPrice {
 	width: 30px !important;
 }

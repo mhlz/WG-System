@@ -25,12 +25,11 @@ div.collum {
 
 }
 
-
 div.list {
     margin: 10px;
 }
 
-.listItem {
+div.listItem {
     border-bottom: solid 1px #AEAEAE;
 
     margin: 5px;
@@ -42,13 +41,25 @@ div.list {
     padding-bottom: 10px;
 }
 
-li.listItem {
-    border: solid 0px black;
+div.selected {
+	background-color: grey;
+}
+
+div.addItem {
+    border-bottom: solid 0px #AEAEAE !important;
+    margin-bottom: 0px !important;
 }
 
 
+input {
+    -webkit-appearance: none !important;
+    -webkit-border-radius: 0 !important;
+}
+
 input.button {
 
+    -webkit-appearance: none !important;
+    -webkit-border-radius: 0 !important;
 	background-color: black;
 	color: white;
 	border: 1px solid white;
@@ -60,10 +71,6 @@ select {
 	background-color: black;
 	color: white;
 	border: 1px solid white;
-}
-
-.right {
-    float:right;
 }
 
 input.text {
@@ -83,6 +90,10 @@ input.undo {
 	background-color: blue;
 }
 
+.right {
+    float:right;
+}
+
 a.noLink {
     color: white;
 }
@@ -98,15 +109,5 @@ a.noLink {
 
         padding-left: 0px;
         padding-right: 0px;
-    }
-
-    input {
-        -webkit-appearance: none !important;
-        -webkit-border-radius: 0 !important;
-    }
-
-    select {
-        -webkit-appearance: none !important;
-        -webkit-border-radius: 0 !important;
     }
 }

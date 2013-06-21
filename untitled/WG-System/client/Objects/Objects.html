@@ -2,7 +2,7 @@
 
 <template name = "Objects">
     <h1>Objekte</h1>
-    <div class = "list objectList" >
+    <div class = "list" >
         {{> newObject}}
         {{#each objects}}
             {{> oneObject}}
@@ -30,7 +30,7 @@
 <template name = "oneObject">
     <div class = "listItem {{selected}}">
         <div class = ""  style = "display: {{visible_unedit}}">
-            {{name}} ({{price}}€) <span class = "warning"> {{warning}} </span>
+            {{name}} {{priceWrap}} <span class = "warning"> {{warning}} </span>
             <div id = "buttons_{{_id}}"  style = "display: {{visible}}; float:right" >
                 <input class = "button edit" type = "submit" value = "edit">
             </div>

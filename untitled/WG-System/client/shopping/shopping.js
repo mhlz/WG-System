@@ -10,6 +10,10 @@ function clearAllNewItems() {
 	for(var i = 0; i < items.length; i++) {
 		items[i].value = "";
 	}
+	var items = document.getElementsByClassName("addNewItemTimes");
+    	for(var i = 0; i < items.length; i++) {
+    		items[i].value = "";
+    	}
 }
 
 function updateTimes() {
@@ -31,7 +35,7 @@ function updateTimes() {
 			timeabs = Math.round(timeabs / 60);
 			unit = "Min.";
 			if(difftime < 0 && timeabs >= 30) {
-				document.getElementById("shoppingTour_" + times[i].getAttribute("data-tourId")).style.display = "none";
+				//document.getElementById("shoppingTour_" + times[i].getAttribute("data-tourId")).style.display = "none";
 			}
 			if(timeabs > 59) {
 				timeabs = Math.round(timeabs/ 60);
@@ -49,24 +53,32 @@ function updateTimes() {
 		times[i].innerHTML = word + " " + String(timeabs) + " " + unit;
 	}
 }	
-	
+
+Template.shopping.items = function() {
+    return shoppingItems.find({},{sort: {itemPlace: 1}});
+}
+
 Template.shoppingList.shoppingTours = function() {
-	var dtime = new Date();
-	dtime = dtime.getTime();
-	dtime -= 30 * 60 * 1000;
-	return shoppingTours.find({time: {$gt: dtime}}, {sort: {time: 1, user: 1}});
+	return shoppingTours.find({}, {sort: {time: 1, user: 1}});
 };
 
 Template.shoppingTour.listItems = function() {
 	if(Session.get("lookingAtTour") == this._id) {
-		return shoppingItems.find({tour: this._id});
+		return shoppingItems.find({$or: [{itemPlace: this.place},{itemPlace: ""}]});
 	} else {
-		return shoppingItems.find({tour: this._id}, {limit: 2});
+		return shoppingItems.find({$or: [{itemPlace: this.place},{itemPlace: ""}]}, {limit: 2});
 	}
 };
 
+Template.shoppingTour.selected = function() {
+	if(Session.equals("lookingAtTour", this._id)) {
+	    return "selected";
+	}
+	return "";
+};
+
 Template.shoppingTour.price = function () {
-    items = shoppingItems.find({tour: this._id});
+    items = shoppingItems.find({$or: [{itemPlace: this.place},{itemPlace: ""}]});
     price = 0;
     items.forEach(function (item) {
         price += parseFloat(item.itemPrice);
@@ -79,11 +91,11 @@ Template.shoppingTour.isDoneBy = function() {
 };
 
 Template.shoppingTour.showDots = function() {
-	return shoppingItems.find({tour: this._id}).count() > 2 && Session.get("lookingAtTour") != this._id;
+	return shoppingItems.find({place: this.place}).count() > 2 && Session.get("lookingAtTour") != this._id;
 };
 
 Template.shoppingTour.getNewListNumber = function() {
-	return shoppingItems.find({tour: this._id}).count() + 1;
+	return shoppingItems.find({place: this.place}).count() + 1;
 };
 
 Template.shoppingTour.showLessButton = function() {
@@ -101,13 +113,16 @@ Template.shoppingList.rendered = function() {
 	Meteor.setInterval(updateTimes, 1000);
 };
 		
+Template.shoppingTour.ItemArgument = function() {
+    return {placeHolder: {place:this.place}};
+};
 
 Template.shoppingTour.events({
-	"click .addNewItem": function() {
-		Meteor.call("insertShoppingItem", this._id, document.getElementById("addNewItemName_" + this._id).value, document.getElementById("addNewItemPrice_" + this._id).value);
-		Session.set("lookingAtTour", this._id);
-		clearAllNewItems();
-	},
+
+    'click' : function (event) {
+        if(this._id)
+            Session.set("lookingAtTour", this._id);
+    },
 	
 	"click .deleteShoppingAnnouncement": function() {
 		Meteor.call("deleteShoppingAnnouncement", this._id);
@@ -122,19 +137,61 @@ Template.shoppingTour.events({
 	}
 });	
 
-Template.listItem.events({
+Template.item.done = function() {
+    if(shoppingItems.findOne({_id: this._id}).done == true) {
+        return "done";
+    }
+    return "";
+};
+
+Template.item.showDoneButton= function() {
+	return !shoppingItems.findOne({_id: this._id}).done;
+};
+
+Template.item.events({
 	"click .deleteShoppingItem": function() {
 		Meteor.call("deleteShoppingItem", this._id);
-	}
+	},
+
+	'click .doneShoppingItem': function() {
+	    Meteor.call("doneShoppingItem",this._id);
+    }
 });
+
+Template.newItem.events({
+	"click .addNewItem": function(event, template) {
+		Meteor.call("insertShoppingItem", template.find("#place").value, template.find("#addNewItemTimes").value, template.find("#addNewItemName").value, template.find("#addNewItemPrice").value);
+		Session.set("lookingAtTour", this._id);
+		clearAllNewItems();
+	},
+});
+
+
+Template.announceDialog.addButton = function() {
+	if(Session.equals("lookingAtTour", "newTour")) {
+	    return "senden";
+	}
+	return "+";
+}
+
+Template.announceDialog.selected = function() {
+	if(Session.equals("lookingAtTour", "newTour")) {
+	    return "selected";
+	}
+	return "";
+}
 
 Template.announceDialog.events({
 	"click .acceptAnnouncementButton": function() {
-		Meteor.call("insertShoppingAnnouncement", document.getElementById("nameOfPlace").value, document.getElementById("timeSelect").value);
+	    if(Session.equals("lookingAtTour", "newTour")) {
+		    Meteor.call("insertShoppingAnnouncement", document.getElementById("place").value, document.getElementById("timeSelect").value);
+            Session.set("lookingAtTour", "");
+        }
+        Session.set("lookingAtTour","newTour");
 	}
 });
 
-Template.listItem.isOrderedBy = function() {
+Template.item.isOrderedBy = function() {
 	return this.orderedBy == Meteor.user().username;
 };
 
