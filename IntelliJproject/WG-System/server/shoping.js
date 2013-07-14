@@ -56,7 +56,7 @@ Meteor.methods({
 		item = shoppingTours.insert({place: place, user: Meteor.user().username, time: time});
 		users = Meteor.users.find();
 		users.forEach(function(user) {
-            sendEmail("best-wg-euw@meteor.com", user.emails[0].address, Meteor.user().username + " geht " + inTime + "Einkaufen bei " + place, " Äußere deine Wünsche auf http://best-wg-euw.meteor.com");
+            sendEmail("best-wg-euw@meteor.com", user.emails[0].address, Meteor.user().username + " geht " + inTime + " einkaufen bei " + place, " Äußere deine Wünsche auf http://best-wg-euw.meteor.com");
 		})
 
 	},
