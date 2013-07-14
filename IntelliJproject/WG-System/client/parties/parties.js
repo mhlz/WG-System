@@ -5,7 +5,7 @@ Template.parties.helpers({
    parties: function() {
        var atime = new Date();
        atime = atime.getTime();
-       return Parties.find({});//date: {$gt: (atime - 24 * 60 * 60 * 1000)}});
+       return Parties.find({date: {$gt: (atime - 24 * 60 * 60 * 1000)}});
    }
 });
 
