@@ -1,0 +1,37 @@
+<template name = "gamesList">
+    <div class = "list">
+        {{> addGame}}
+        {{#each games}}
+            {{> game}}
+        {{else}}
+            <div class = "listItem">
+                There are no games yet :(
+            </div>
+        {{/each}}
+    </div>
+</template>
+
+
+<template name = "addGame">
+    <div class = "listItem addItem {{#if selected}}selected{{/if}}">
+        {{#if selected}}
+            <form>
+                <input class = "text" placeholder = "name">
+                <input class = "button submit" type = "submit" value = "add">
+            </form>
+        {{else}}
+        <input class = "button right add" type = "submit" value = "+">
+        {{/if}}
+    </div>
+</template>
+
+
+<template name = "game">
+    <div class = "listItem {{#if selected}}selected{{/if}}">
+        {{name}}
+        {{#if selected}}
+            <br />
+        {{players}}, {{tournaments}}
+        {{/if}}
+    </div>
+</template>

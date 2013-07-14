@@ -86,7 +86,7 @@ Meteor.methods({
 });
 
 Meteor.startup(function() {
-    sendEmail("best-wg-euw@meteor.com","reckt3r@gmail.com","Server Started up", "Meteor.startup() just got called.");
+    //sendEmail("best-wg-euw@meteor.com","reckt3r@gmail.com","Server Started up", "Meteor.startup() just got called.");
 	/*var atime = new Date();
 	atime = atime.getTime();
 	shoppingTours.insert({place: "(vor 40 min)", user: "Mischa", time: atime - 40 * 60 * 1000});

@@ -1,0 +1,66 @@
+<template name = "parties">
+    <h1>Parties</h1>
+    <div class = "list">
+        {{> addParty}}
+        {{#each parties}}
+            {{> party}}
+        {{else}}
+            <div class = "listItem">
+                There are no parties currently.
+            </div>
+        {{/each}}
+    </div>
+</template>
+
+
+<template name = "addParty">
+    <div class = "listItem addItem {{#if selected}}selected{{/if}}">
+        {{#if selected}}
+            <form>
+                <input class = "button submit right" type = "submit" onclick = "return false" value = "add">
+
+                <input class = "text" id = "PartyName" placeholder = "name"> <br />
+                <textarea class = "text" id = "PartyDetails" placeholder = "details"></textarea> <br />
+                <input class = "" id = "PartyTime" type = "date" value = "{{timePlaceholder}}"> <br />
+            </form>
+        {{else}}
+            <input class = "button right add" type = "submit" value = "+">
+        {{/if}}
+    </div>
+</template>
+
+
+
+<template name = "party">
+    <div class = "listItem {{#if selected}}selected{{/if}}">
+        {{name}} <span class = "small info"> {{date}}</span>
+        {{#if selected}}
+            {{#if isCreator}}
+                <input type = "button" class = "button right remove" value = "delete">
+            {{/if}}
+            <div class = "small">
+                {{#each usersaproved}}
+                    {{> useraproved}}
+                {{/each}}
+            </div>
+            <span class = "small">
+                    {{detail}}
+            </span>
+            <span class = "right">
+                <input class = "button aprove" type = "submit" value = "&#10004;">
+                <input class = "button disaprove" type = "submit" value = "&#10008;">
+            </span>
+        {{else}}
+            <span class = "small info {{#if aproved}}aprove{{else}}{{#if notaproved}}disaprove{{/if}}{{/if}}">
+                {{aproval}}
+            </span>
+        {{/if}}
+    </div>
+</template>
+
+
+<template name = "useraproved">
+    <span class = "info {{#if aproved}}aprove{{else}}{{#if notaproved}}disaprove{{/if}}{{/if}}">
+        {{username}}
+    </span>
+</template>

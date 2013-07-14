@@ -9,7 +9,9 @@
 
 
 <body>
-    {{> loginArea}}
+    <div class = "right">
+        {{loginButtons align="right"}}
+    </div>
 
     {{#if currentUser}}
     <div class = "collum">
@@ -18,14 +20,9 @@
     <div class = "collum">
         {{> Objects}}
     </div>
+    <div class = "collum">
+        {{> parties}}
+    </div>
 
     {{/if}}
 </body>
-
-
-
-<template name="loginArea">
-    <div style="float:right;">
-        {{loginButtons align="right"}}
-    </div>
-</template>
