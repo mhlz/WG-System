@@ -11,21 +11,21 @@ Template.oneObject.owners = function () {
 }
 
 Template.oneObject.selected = function () {
-    if(Session.equals("selectedObject", this._id)) {
+    if(Session.equals("selected", this._id)) {
         return "selected";
     }
     return "";
 }
 
 Template.oneObject.priceWrap = function () {
-    if(Session.equals("selectedObject", this._id)) {
+    if(Session.equals("selected", this._id)) {
         return "(" + this.price + "€)" ;
     }
     return "";
 }
 
 Template.oneObject.visible = function () {
-    if(Session.equals("selectedObject", this._id)) {
+    if(Session.equals("selected", this._id)) {
         return "block";
     }
     return "none";
@@ -33,7 +33,7 @@ Template.oneObject.visible = function () {
 
 Template.oneObject.visible_edit = function () {
     if(Session.equals("EditObject", this._id)) {
-        if(!Session.equals("selectedObject", this._id)){
+        if(!Session.equals("selected", this._id)){
             Session.set("EditObject", "");
             return "none";
         }
@@ -84,27 +84,27 @@ Template.oneObject.events =  ({
     },
 
     'click' : function () {
-        if(!Session.equals("selectedObject",this.objectId))
-            Session.set("selectedObject", this._id);
+        if(!Session.equals("selected",this.objectId))
+            Session.set("selected", this._id);
     }
 });
 
 Template.newObject.selected = function () {
-    if(Session.equals("selectedObject", "newObject")) {
+    if(Session.equals("selected", "newObject")) {
         return "selected";
     }
     return "";
 }
 
 Template.newObject.visible = function () {
-    if(Session.equals("selectedObject", "newObject")) {
+    if(Session.equals("selected", "newObject")) {
         return "block";
     }
     return "none";
 }
 
 Template.newObject.submit = function () {
-    if(Session.equals("selectedObject", "newObject")) {
+    if(Session.equals("selected", "newObject")) {
         return "add";
     }
     return "+";
@@ -112,7 +112,7 @@ Template.newObject.submit = function () {
 
 Template.newObject.undo = function () {
         var date = new Date();
-    if(!Session.equals("selectedObject", "newObject") && (date.getTime() - Session.get("lastRemovedTime") < 60 * 1000)) {
+    if(!Session.equals("selected", "newObject") && (date.getTime() - Session.get("lastRemovedTime") < 60 * 1000)) {
         return "block";
     }
     return "none";
@@ -120,13 +120,13 @@ Template.newObject.undo = function () {
 
 Template.newObject.events = ({
     'click .add' : function () {
-        if(Session.equals("selectedObject", "newObject")) {
+        if(Session.equals("selected", "newObject")) {
             Meteor.call("insertObject", document.getElementById("name").value, document.getElementById("price").value);
             document.getElementById("name").value = "";
             document.getElementById("price").value = "";
             return;
         }
-        Session.set("selectedObject", "newObject");
+        Session.set("selected", "newObject");
     },
 
     'click .undo' : function () {
@@ -134,7 +134,7 @@ Template.newObject.events = ({
         Session.set("lastRemovedId", "");
         Session.set("lastRemovedType", "");
         Session.set("lastRemovedTime", 0);
-        Session.set("selectedObject", "");
+        Session.set("selected", "");
     },
 });
 

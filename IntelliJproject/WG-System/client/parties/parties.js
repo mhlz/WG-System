@@ -1,5 +1,6 @@
 Meteor.subscribe("parties");
 Meteor.subscribe("aproval");
+Meteor.subscribe("userData");
 
 Template.parties.helpers({
    parties: function() {
@@ -38,7 +39,7 @@ Template.party.helpers({
     },
 
     selected: function() {
-        return Session.equals("parties_selectedParty",this._id);
+        return Session.equals("selected",this._id);
     },
 
     isCreator: function() {
@@ -48,7 +49,7 @@ Template.party.helpers({
 
 Template.party.events({
     'click': function() {
-        Session.set("parties_selectedParty",this._id);
+        Session.set("selected",this._id);
     },
 
     'click .aprove': function() {
@@ -66,22 +67,22 @@ Template.party.events({
 
 Template.useraproved.helpers({
     aproved: function(){
-        if(Aproval.findOne({partyId: Session.get("parties_selectedParty"), userId: this._id}) == undefined){
+        if(Aproval.findOne({partyId: Session.get("selected"), userId: this._id}) == undefined){
             return false;
         }
-        return Aproval.findOne({partyId: Session.get("parties_selectedParty"), userId: this._id}).aproved;
+        return Aproval.findOne({partyId: Session.get("selected"), userId: this._id}).aproved;
     },
     notaproved: function(){
-        if(Aproval.findOne({partyId: Session.get("parties_selectedParty"), userId: this._id}) == undefined){
+        if(Aproval.findOne({partyId: Session.get("selected"), userId: this._id}) == undefined){
             return false;
         }
-        return !Aproval.findOne({partyId: Session.get("parties_selectedParty"), userId: this._id}).aproved;
+        return !Aproval.findOne({partyId: Session.get("selected"), userId: this._id}).aproved;
     }
 });
 
 Template.addParty.helpers({
     selected: function() {
-        return Session.equals("parties_selectedParty", "new");
+        return Session.equals("selected", "newParty");
     },
 
     timePlaceholder: function() {
@@ -92,12 +93,12 @@ Template.addParty.helpers({
 
 Template.addParty.events({
    'click': function() {
-       Session.set("parties_selectedParty", "new");
+       Session.set("selected", "newParty");
    },
 
    'click .submit': function() {
        if(new Date(document.getElementById("PartyTime").value).getTime() != NaN){
-           Session.set("parties_selectedParty", "");
+           Session.set("selected", "");
            Meteor.call("addParty", document.getElementById("PartyName").value, document.getElementById("PartyDetails").value, new Date(document.getElementById("PartyTime").value).getTime(), Meteor.userId());
        }
    }

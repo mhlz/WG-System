@@ -63,7 +63,7 @@ Template.shoppingList.shoppingTours = function() {
 };
 
 Template.shoppingTour.listItems = function() {
-	if(Session.get("lookingAtTour") == this._id) {
+	if(Session.get("selected") == this._id) {
 		return shoppingItems.find({$or: [{itemPlace: this.place},{itemPlace: ""}]});
 	} else {
 		return shoppingItems.find({$or: [{itemPlace: this.place},{itemPlace: ""}]}, {limit: 2});
@@ -71,7 +71,7 @@ Template.shoppingTour.listItems = function() {
 };
 
 Template.shoppingTour.selected = function() {
-	if(Session.equals("lookingAtTour", this._id)) {
+	if(Session.equals("selected", this._id)) {
 	    return "selected";
 	}
 	return "";
@@ -91,7 +91,7 @@ Template.shoppingTour.isDoneBy = function() {
 };
 
 Template.shoppingTour.showDots = function() {
-	return shoppingItems.find({place: this.place}).count() > 2 && Session.get("lookingAtTour") != this._id;
+	return shoppingItems.find({place: this.place}).count() > 2 && Session.get("selected") != this._id;
 };
 
 Template.shoppingTour.getNewListNumber = function() {
@@ -99,7 +99,7 @@ Template.shoppingTour.getNewListNumber = function() {
 };
 
 Template.shoppingTour.showLessButton = function() {
-	return Session.get("lookingAtTour") == this._id && shoppingItems.find({tour: this._id}).count() > 2;
+	return Session.get("selected") == this._id && shoppingItems.find({tour: this._id}).count() > 2;
 };
 
 Template.shoppingTour.inFuture = function() {
@@ -121,7 +121,7 @@ Template.shoppingTour.events({
 
     'click' : function (event) {
         if(this._id)
-            Session.set("lookingAtTour", this._id);
+            Session.set("selected", this._id);
     },
 	
 	"click .deleteShoppingAnnouncement": function() {
@@ -129,11 +129,11 @@ Template.shoppingTour.events({
 	},
 	
 	"click .showMore": function() {
-		Session.set("lookingAtTour", this._id);
+		Session.set("selected", this._id);
 	},
 	
 	"click .showLess": function() {
-		Session.set("lookingAtTour", "");
+		Session.set("selected", "");
 	}
 });	
 
@@ -161,21 +161,21 @@ Template.item.events({
 Template.newItem.events({
 	"click .addNewItem": function(event, template) {
 		Meteor.call("insertShoppingItem", template.find("#place").value, template.find("#addNewItemTimes").value, template.find("#addNewItemName").value, template.find("#addNewItemPrice").value);
-		Session.set("lookingAtTour", this._id);
+		Session.set("selected", this._id);
 		clearAllNewItems();
 	},
 });
 
 
 Template.announceDialog.addButton = function() {
-	if(Session.equals("lookingAtTour", "newTour")) {
+	if(Session.equals("selected", "newTour")) {
 	    return "senden";
 	}
 	return "+";
 }
 
 Template.announceDialog.selected = function() {
-	if(Session.equals("lookingAtTour", "newTour")) {
+	if(Session.equals("selected", "newTour")) {
 	    return "selected";
 	}
 	return "";
@@ -183,11 +183,11 @@ Template.announceDialog.selected = function() {
 
 Template.announceDialog.events({
 	"click .acceptAnnouncementButton": function() {
-	    if(Session.equals("lookingAtTour", "newTour")) {
+	    if(Session.equals("selected", "newTour")) {
 		    Meteor.call("insertShoppingAnnouncement", document.getElementById("place").value, document.getElementById("timeSelect").value);
-            Session.set("lookingAtTour", "");
+            Session.set("selected", "");
         }
-        Session.set("lookingAtTour","newTour");
+        Session.set("selected","newTour");
 	}
 });
 

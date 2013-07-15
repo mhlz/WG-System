@@ -11,3 +11,4 @@ Tournaments = new Meteor.Collection("tournaments");
 
 Parties = new Meteor.Collection("parties");
 Aproval = new Meteor.Collection("aproval");
+

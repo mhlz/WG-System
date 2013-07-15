@@ -4,14 +4,20 @@ Meteor.publish("parties", function() {
         return Parties.find();
     }
     return false;
-})
+});
 
 Meteor.publish("aproval", function() {
     if(this.userId) {
         return Aproval.find();
     }
     return false;
-})
+});
+
+Meteor.publish("userData", function() {
+    if(this.userId) {
+        return Meteor.users.find({},{fields: {username: 1, _id: 1}});
+    }
+});
 
 Meteor.methods({
     aproveParty: function(partyId, userId, aproved) {
@@ -28,5 +34,9 @@ Meteor.methods({
 
     deleteParty: function(id) {
         Parties.remove({_id: id});
+    },
+
+    getUserCount: function(){
+      return Meteor.users.count();
     }
 });
