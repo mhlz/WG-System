@@ -41,18 +41,22 @@ div.collum {
     padding-bottom: 10px;
 }
 
+.smallItem {
+    margin: 0px !important;
+    padding: 0px !important;
+}
+
 .selected {
 	background-color: grey;
 }
 
-.addItem {
-    border-bottom: solid 0px #AEAEAE !important;
+.noBorder {
+    border: solid 0px #AEAEAE !important;
     margin-bottom: 0px !important;
 }
 
 
 input {
-    -webkit-appearance: none !important;
     -webkit-border-radius: 0 !important;
     background-color: black;
     color: white;
@@ -84,6 +88,10 @@ select {
 	padding: 2px;
 }
 
+.checkbox {
+    background-color: white;
+}
+
 .remove {
 	background-color: red;
 }
@@ -96,8 +104,27 @@ select {
     float:right;
 }
 
+.small {
+    font-size: 10px;
+}
+
+.info{
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    padding-right: 5px;
+    padding-left: 5px;
+
+    background-color: lightgrey;
+    color: black;
+}
+
+
 a.noLink {
     color: white;
+}
+
+h2 {
+    margin-left: 30px;
 }
 
 @media only screen and (max-device-width: 480px) {

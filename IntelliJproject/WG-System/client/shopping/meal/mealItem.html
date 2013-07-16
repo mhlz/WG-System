@@ -1,0 +1,19 @@
+<template name = "addMealItem">
+    <div class = "listItem noBorder">
+        <input type = "button" class = "button right add" value = "add">
+        <input type = "text" class = "text" id = "mealItemAmount_{{_id}}" placeholder = "amount">x
+        <input type = "text" class = "text" id = "mealItemName_{{_id}}" placeholder = "name">
+        <input type = "text" class = "text" id = "mealItemPrice_{{_id}}" placeholder = "price">
+
+    </div>
+</template>
+
+
+<template name = "mealItem">
+    <div class = "listItem">
+            {{amount}}x {{name}}
+        {{#if isCreator}}
+            <input type = "button" class = "button remove right remove" value = "remove">
+        {{/if}}
+    </div>
+</template>

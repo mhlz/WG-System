@@ -64,15 +64,14 @@ Meteor.methods({
 	deleteShoppingAnnouncement: function(tourId) {
 	    tour = shoppingTours.findOne({_id: tourId});
 		shoppingTours.remove({_id: tourId, user: Meteor.user().username});
-		shoppingItems.remove({done: true, itemPlace: tour.place});
-		shoppingItems.remove({done: true, itemPlace: ""});
+		shoppingItems.remove({done: true, $or: [{place: tour.place}, {place: ""}, {place: null}]});
 	},
 	
-	insertShoppingItem: function(itemPlace, itemTimes, itemName, itemPrice) {
+	insertShoppingItem: function(place, times, name, price) {
 		if(Meteor.user().username == "") {
 			return;
 		}
-		shoppingItems.insert({itemPlace: itemPlace, itemName: itemName, itemTimes: itemTimes, itemPrice: itemPrice, orderedBy: Meteor.user().username, done: false});
+		shoppingItems.insert({place: place, name: name, times: times, price: price, orderedBy: Meteor.user().username, done: false});
 	},
 	
 	deleteShoppingItem: function(itemId) {
@@ -81,7 +80,7 @@ Meteor.methods({
 
 	doneShoppingItem: function(itemId) {
 	    item = shoppingItems.findOne({_id: itemId});
-	    shoppingItems.update({_id: itemId},{orderedBy: item.orderedBy, itemPlace: item.itemPlace, itemTimes: item.itemTimes, itemName: item.itemName, itemPrice: item.itemPrice, done: true})
+	    shoppingItems.update({_id: itemId},{orderedBy: item.orderedBy, place: item.place, times: item.times, name: item.name, price: item.price, done: true})
 	}
 });
 

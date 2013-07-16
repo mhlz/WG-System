@@ -1,0 +1,46 @@
+<template name = "mealList">
+    <div class = "list">
+        {{> addMeal}}
+        {{#each meals}}
+            {{> meal}}
+        {{else}}
+            <div class = "listItem">
+                No meal there.
+            </div>
+        {{/each}}
+    </div>
+</template>
+
+
+<template name ="addMeal">
+    <div class = "listItem noBorder {{#if selected}}selected{{/if}}">
+        {{#if selected}}
+            <input type = "submit" class = "button right submit" value = "add">
+            <input class = "text" id = "mealName" placeholder = "name">
+        {{else}}
+            <input type = "button" class = "button right add" value = "+">
+        {{/if}}
+    </div>
+</template>
+
+
+<template name = "meal">
+    <div class = "listItem {{#if selected}}selected{{/if}}">
+        {{name}}
+        <span class = "info small">{{username}}</span>
+        {{#if selected}}
+            {{#if isCreator}}
+                <input class = "button right remove" type = "submit" value = "remove">
+            {{/if}}
+            <div class = "list">
+                {{#if isCreator}}
+                    {{> addMealItem}}
+                {{/if}}
+                {{#each items}}
+                    {{> mealItem}}
+                {{/each}}
+            </div>
+        {{else}}
+        {{/if}}
+    </div>
+</template>

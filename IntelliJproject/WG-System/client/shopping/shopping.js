@@ -2,15 +2,15 @@ Meteor.subscribe("shopping-tours");
 Meteor.subscribe("shopping-items");
 
 function clearAllNewItems() {
-	var items = document.getElementsByClassName("addNewItemName");
+	var items = document.getElementsByClassName("addNewname");
 	for(var i = 0; i < items.length; i++) {
 		items[i].value = "";
 	}
-	var items = document.getElementsByClassName("addNewItemPrice");
+	var items = document.getElementsByClassName("addNewprice");
 	for(var i = 0; i < items.length; i++) {
 		items[i].value = "";
 	}
-	var items = document.getElementsByClassName("addNewItemTimes");
+	var items = document.getElementsByClassName("addNewtimes");
     	for(var i = 0; i < items.length; i++) {
     		items[i].value = "";
     	}
@@ -54,73 +54,79 @@ function updateTimes() {
 	}
 }	
 
-Template.shopping.items = function() {
-    return shoppingItems.find({},{sort: {itemPlace: 1}});
-}
+Template.shopping.helpers({
+    items: function() {
+        return shoppingItems.find({},{sort: {place: 1}});
+    }
+});
 
-Template.shoppingList.shoppingTours = function() {
-	return shoppingTours.find({}, {sort: {time: 1, user: 1}});
-};
-
-Template.shoppingTour.listItems = function() {
-	if(Session.get("selected") == this._id) {
-		return shoppingItems.find({$or: [{itemPlace: this.place},{itemPlace: ""}]});
-	} else {
-		return shoppingItems.find({$or: [{itemPlace: this.place},{itemPlace: ""}]}, {limit: 2});
-	}
-};
-
-Template.shoppingTour.selected = function() {
-	if(Session.equals("selected", this._id)) {
-	    return "selected";
-	}
-	return "";
-};
-
-Template.shoppingTour.price = function () {
-    items = shoppingItems.find({$or: [{itemPlace: this.place},{itemPlace: ""}]});
-    price = 0;
-    items.forEach(function (item) {
-        price += parseFloat(item.itemPrice);
-    });
-    return price;
-}
-
-Template.shoppingTour.isDoneBy = function() {
-	return this.user == Meteor.user().username;
-};
-
-Template.shoppingTour.showDots = function() {
-	return shoppingItems.find({place: this.place}).count() > 2 && Session.get("selected") != this._id;
-};
-
-Template.shoppingTour.getNewListNumber = function() {
-	return shoppingItems.find({place: this.place}).count() + 1;
-};
-
-Template.shoppingTour.showLessButton = function() {
-	return Session.get("selected") == this._id && shoppingItems.find({tour: this._id}).count() > 2;
-};
-
-Template.shoppingTour.inFuture = function() {
-	var atime = new Date();
-	atime = atime.getTime();
-	return atime < this.time;
-};
+Template.shoppingList.helpers({
+    shoppingTours: function() {
+        return shoppingTours.find({}, {sort: {time: 1, user: 1}});
+    }
+});
 
 Template.shoppingList.rendered = function() {
 	updateTimes();
-	Meteor.setInterval(updateTimes, 1000);
-};
-		
-Template.shoppingTour.ItemArgument = function() {
-    return {placeHolder: {place:this.place}};
-};
+	Meteor.setInterval(updateTimes, 5000);
+}
+
+Template.shoppingTour.helpers({
+    listItems: function() {
+        if(Session.equals("selected", this._id)) {
+            return shoppingItems.find({$or: [{place: this.place}, {place: ""}, {place: null}]},{sort: {name: 1}});
+        } else {
+            return shoppingItems.find({$or: [{place: this.place},{place: ""}, {place: null}]}, {sort: {name: 1}, limit: 2});
+        }
+    },
+
+    selected: function() {
+        if(Session.equals("selected", this._id)) {
+            return "selected";
+        }
+        return "";
+    },
+
+    price: function () {
+        items = shoppingItems.find({$or: [{place: this.place},{place: ""}]});
+        price = 0;
+        items.forEach(function (item) {
+            price += parseFloat(item.price);
+        });
+        return price;
+    },
+
+    isDoneBy: function() {
+        return this.user == Meteor.user().username;
+    },
+
+    showDots: function() {
+        return shoppingItems.find({place: this.place}).count() > 2 && Session.get("selected") != this._id;
+    },
+
+    getNewListNumber: function() {
+        return shoppingItems.find({place: this.place}).count() + 1;
+    },
+
+    showLessButton: function() {
+        return Session.get("selected") == this._id && shoppingItems.find({tour: this._id}).count() > 2;
+    },
+
+    inFuture: function() {
+        var atime = new Date();
+        atime = atime.getTime();
+        return atime < this.time;
+    },
+
+    ItemArgument: function() {
+        return {placeHolder: {place: this.place}};
+    }
+});
 
 Template.shoppingTour.events({
 
-    'click' : function (event) {
-        if(this._id)
+    'click' : function () {
+        if(!this.orderedBy)
             Session.set("selected", this._id);
     },
 	
@@ -137,49 +143,31 @@ Template.shoppingTour.events({
 	}
 });	
 
-Template.item.done = function() {
-    if(shoppingItems.findOne({_id: this._id}).done == true) {
-        return "done";
-    }
-    return "";
-};
-
-Template.item.showDoneButton= function() {
-	return !shoppingItems.findOne({_id: this._id}).done;
-};
-
-Template.item.events({
-	"click .deleteShoppingItem": function() {
-		Meteor.call("deleteShoppingItem", this._id);
-	},
-
-	'click .doneShoppingItem': function() {
-	    Meteor.call("doneShoppingItem",this._id);
-    }
-});
 
 Template.newItem.events({
 	"click .addNewItem": function(event, template) {
-		Meteor.call("insertShoppingItem", template.find("#place").value, template.find("#addNewItemTimes").value, template.find("#addNewItemName").value, template.find("#addNewItemPrice").value);
+		Meteor.call("insertShoppingItem", template.find("#place").value, template.find("#addNewtimes").value, template.find("#addNewname").value, template.find("#addNewprice").value);
 		Session.set("selected", this._id);
 		clearAllNewItems();
 	},
 });
 
 
-Template.announceDialog.addButton = function() {
-	if(Session.equals("selected", "newTour")) {
-	    return "senden";
-	}
-	return "+";
-}
+Template.announceDialog.helpers({
+    addButton: function() {
+        if(Session.equals("selected", "newTour")) {
+            return "senden";
+        }
+        return "+";
+    },
 
-Template.announceDialog.selected = function() {
-	if(Session.equals("selected", "newTour")) {
-	    return "selected";
-	}
-	return "";
-}
+    selected: function() {
+        if(Session.equals("selected", "newTour")) {
+            return "selected";
+        }
+        return "";
+    }
+});
 
 Template.announceDialog.events({
 	"click .acceptAnnouncementButton": function() {
@@ -191,9 +179,35 @@ Template.announceDialog.events({
 	}
 });
 
-Template.item.isOrderedBy = function() {
-	return this.orderedBy == Meteor.user().username;
-};
+Template.item.helpers({
+    isOrderedBy: function() {
+        return this.orderedBy == Meteor.user().username;
+    },
+
+    showDoneButton: function() {
+        return !this.done;
+    },
+
+    done: function() {
+        if(this.done) {
+            return "done";
+        }
+        return "";
+    }
+});
+
+
+Template.item.events({
+    "click .deleteShoppingItem": function() {
+        Meteor.call("deleteShoppingItem", this._id);
+    },
+
+    'click .doneShoppingItem': function() {
+        Meteor.call("doneShoppingItem",this._id);
+    }
+});
+
+
 
 Meteor.startup(function() {
 	$("body").height(window.innerHeight);

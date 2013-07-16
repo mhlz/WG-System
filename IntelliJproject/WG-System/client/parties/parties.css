@@ -1,18 +1,4 @@
 
-.small {
-    font-size: 10px;
-}
-
-.info{
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-    padding-right: 5px;
-    padding-left: 5px;
-
-    background-color: lightgrey;
-    color: black;
-}
-
 .aprove {
     background-color: green !important;
     color: white;

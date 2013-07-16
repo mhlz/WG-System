@@ -12,10 +12,12 @@
             {{> item}}
         {{/each}}
     </div>
+    <h1>Meals</h1>
+    {{> mealList}}
 </template>
 
 <template name="announceDialog">
-    <div  class = "listItem addItem {{selected}}">
+    <div  class = "listItem noBorder {{selected}}">
         <input class="acceptAnnouncementButton button right" type="submit" value="{{addButton}}">
         <div id = "newTour" class = "{{selected}}">
             Ich gehe
@@ -68,7 +70,7 @@
 			{{/each}}
 			{{#if showDots}}<div class = "listItem" style="list-style: none"><input type = "submit" class = "button showMore" value = "Mehr anzeigen"></div>{{/if}}
 			{{#if showLessButton}}&nbsp;<input  type = "submit" class="button showLess" value= "Weniger anzeigen">{{/if}}
-            {{> newItem ItemArgument }}
+            {{> newItem ItemArgument}}
 		</div>
 	</div>
 </template>
@@ -79,20 +81,24 @@
         {{#if showDoneButton}}
             <input class="doneShoppingItem button undo right" type="button" value="Erledigt">
         {{/if}}
-        {{itemName}} ({{itemPrice}}€ ,von {{orderedBy}}, {{itemPlace}})
+        {{#if times}}{{times}}x{{/if}}
+        {{name}}
+        {{#if price}}<span class = "info small">{{price}}€</span>{{/if}}
+        {{#if place}}<span class = "small info">{{place}}</span>{{/if}}
+        <span class = "info small">{{orderedBy}}</span>
 	</div>
 </template>
 
 
 <template name = "newItem">
-    Füge  <input id="addNewItemTimes" class="addNewItemTime text" type="text" placeholder="X" style="width:10px;"> mal
-    <input id="addNewItemName" class="addNewItemName text" type="text" placeholder="Etwas">
-    für <input id="addNewItemPrice" class="addNewItemPrice text" type="text" placeholder="Euro">
+    Füge  <input id="addNewtimes" class="addNewItemTime text" type="text" placeholder="X" style="width:10px;"> mal
+    <input id="addNewname" class="addNewname text" type="text" placeholder="Etwas">
+    für <input id="addNewprice" class="addNewprice text" type="text" placeholder="Euro">
     zu
     {{#with placeHolder}}
-        <span id="place" value="{{place}}">{{place}}</span>
+        <span id = "place" value="{{place}}" value = "{{place}}">{{place}}</span>
     {{else}}
-        {{> placeSelect }}
+        {{> placeSelect}}
     {{/with}}
-    <input type="button" class="addNewItem button" value="hinzu">.<br>
+    <input type="button" id = "place" class="addNewItem button" value="hinzu">.<br>
 </template>
