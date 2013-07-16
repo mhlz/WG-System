@@ -66,11 +66,6 @@ Template.shoppingList.helpers({
     }
 });
 
-Template.shoppingList.rendered = function() {
-	updateTimes();
-	Meteor.setInterval(updateTimes, 5000);
-}
-
 Template.shoppingTour.helpers({
     listItems: function() {
         if(Session.equals("selected", this._id)) {
@@ -113,6 +108,7 @@ Template.shoppingTour.helpers({
     },
 
     inFuture: function() {
+		updateTimes();
         var atime = new Date();
         atime = atime.getTime();
         return atime < this.time;
@@ -121,6 +117,7 @@ Template.shoppingTour.helpers({
     ItemArgument: function() {
         return {placeHolder: {place: this.place}};
     }
+
 });
 
 Template.shoppingTour.events({
@@ -211,4 +208,6 @@ Template.item.events({
 
 Meteor.startup(function() {
 	$("body").height(window.innerHeight);
+	updateTimes();
+	Meteor.setInterval(updateTimes, 5000);
 });
