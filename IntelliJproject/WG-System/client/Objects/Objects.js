@@ -17,12 +17,6 @@ Template.oneObject.selected = function () {
     return "";
 }
 
-Template.oneObject.priceWrap = function () {
-    if(Session.equals("selected", this._id)) {
-        return "(" + this.price + "€)" ;
-    }
-    return "";
-}
 
 Template.oneObject.visible = function () {
     if(Session.equals("selected", this._id)) {

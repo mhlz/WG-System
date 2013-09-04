@@ -17,8 +17,8 @@ body {
 
 
 div.collum {
-    min-width:33%;
-    min-width:400px;
+    width:33%;
+    width:400px;
     border: solid 1px white;
     padding: 10px;
     float: left;
@@ -101,9 +101,8 @@ select {
 }
 
 .right {
-    float:right;
+    float: right;
 }
-
 .small {
     font-size: 10px;
 }
@@ -121,6 +120,11 @@ select {
 
 a.noLink {
     color: white;
+}
+
+a.noLink:hover {
+    color: #AEAEAE;
+    cursor:pointer;
 }
 
 h2 {

@@ -14,6 +14,7 @@
     </div>
     <h1>Meals</h1>
     {{> mealList}}
+
 </template>
 
 <template name="announceDialog">
@@ -61,7 +62,7 @@
 
 <template name="shoppingTour">
 	<div class="shoppingTour listItem  {{selected}}" id="shoppingTour_{{_id}}">
-		{{user}} {{#if inFuture}}geht{{else}}ging{{/if}} <span class="updatingTime" data-tourId="{{_id}}" data-time="{{time}}">{{time}}</span> zu {{place}}. {{#if isDoneBy}}&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" class="deleteShoppingAnnouncement button remove right" value="Löschen">{{/if}}<br>
+		{{user}} {{#if inFuture}}geht{{else}}ging{{/if}} <span class="updatingTime" data-tourId="{{_id}}" data-time="{{time}}">{{time_nice}}</span> zu {{place}}. {{#if isDoneBy}}&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" class="deleteShoppingAnnouncement button remove right" value="Löschen">{{/if}}<br>
 		<div id="list_shoppingTour_{{shoppingTourId}}" class="list">
         Insgesamt: {{price}}€
 			<div class = "list">

@@ -30,7 +30,7 @@
 <template name = "oneObject">
     <div class = "listItem {{selected}}">
         <div class = ""  style = "display: {{visible_unedit}}">
-            {{name}} {{priceWrap}} <span class = "warning"> {{warning}} </span>
+            {{name}} <span class = "info small">{{price}}€</span> <span class = "warning"> {{warning}} </span>
             <div id = "buttons_{{_id}}"  style = "display: {{visible}}; float:right" >
                 <input class = "button edit" type = "submit" value = "edit">
             </div>
@@ -87,5 +87,5 @@
 
 
 <template name = "owner">
-    {{name}}: {{money}}€ ({{percentage}}%)
+    {{name}} <span class = "info small">{{money}}€ ({{percentage}}%) </span>
 </template>

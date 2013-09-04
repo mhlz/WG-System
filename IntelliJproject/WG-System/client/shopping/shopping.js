@@ -116,6 +116,41 @@ Template.shoppingTour.helpers({
 
     ItemArgument: function() {
         return {placeHolder: {place: this.place}};
+    },
+
+    time_nice: function() {
+        var atime = new Date();
+        atime = atime.getTime();
+        var difftime = Math.round((this.time - atime) / 1000);
+        var unit = "";
+        var word = "";
+        if(difftime < 0) {
+            word = "vor";
+        } else {
+            word = "in";
+        }
+        var timeabs = Math.round(Math.abs(difftime));
+        unit = "Sek.";
+        if(timeabs > 59) {
+            timeabs = Math.round(timeabs / 60);
+            unit = "Min.";
+            if(difftime < 0 && timeabs >= 30) {
+                //document.getElementById("shoppingTour_" + times[i].getAttribute("data-tourId")).style.display = "none";
+            }
+            if(timeabs > 59) {
+                timeabs = Math.round(timeabs/ 60);
+                unit = "Std.";
+                if(timeabs > 23) {
+                    timeabs = Math.round(timeabs / 24);
+                    unit = "T.";
+                    if(timeabs > 6) {
+                        timeabs = Math.round(timeabs / 7);
+                        unit = "W."
+                    }
+                }
+            }
+        }
+        return word + " " + String(timeabs) + " " + unit;
     }
 
 });

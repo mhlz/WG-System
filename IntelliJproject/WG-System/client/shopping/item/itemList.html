@@ -1,8 +1,8 @@
-rearanged<template name = "item">
+<template name = "item">
     <div class = "listItem {{done}}">
         <input class="deleteShoppingItem button remove right" type="button" value="Entfernen">
         {{#if showDoneButton}}
-        <input class="doneShoppingItem button undo right" type="button" value="Erledigt">
+            <input class="doneShoppingItem button undo right" type="button" value="Erledigt">
         {{/if}}
         {{#if times}}{{times}}x{{/if}}
         {{name}}
@@ -21,7 +21,7 @@ rearanged<template name = "item">
     {{#with placeHolder}}
     <span id = "place" value="{{place}}" value = "{{place}}">{{place}}</span>
     {{else}}
-    {{> placeSelect}}
+        {{> placeSelect}}
     {{/with}}
     <input type="button" id = "place" class="addNewItem button" value="hinzu">.<br>
 </template>

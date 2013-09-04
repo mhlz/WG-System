@@ -1,0 +1,16 @@
+.note {
+    margin: 2px;
+    background-color: black;
+    vertical-align: middle;
+    display: inline;
+}
+
+.noteSelected {
+    border: 2px #AEAEAE solid;
+}
+
+
+.fly {
+    position: absolute;
+    z-index: 10;
+}

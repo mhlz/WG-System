@@ -17,4 +17,10 @@ Tournaments = new Meteor.Collection("tournaments");
 Parties = new Meteor.Collection("parties");
 Aproval = new Meteor.Collection("aproval");
 
+Notes = new Meteor.Collection("notes");
+
+Jobs = new Meteor.Collection("jobs");
+UserJobs = new Meteor.Collection("userJobs");
+TwitterNames = new Meteor.Collection("twitterNames");
+
 

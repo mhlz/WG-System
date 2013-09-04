@@ -1,0 +1,38 @@
+<template name = "whiteboard">
+
+    <div class = "listItem">
+    {{> addNote}}
+    </div>
+
+    <div>
+        {{#each notes}}
+            {{> note}}
+        {{else}}
+            No Notes here!
+        {{/each}}
+    </div>
+</template>
+
+
+<template name = "addNote">
+    <form action = "#">
+        <input class = "text" id = "newNote" placeholder = "note">
+        <input class = "button add" type = "submit" value = "add">
+    </form>
+</template>
+
+
+<template name = "note">
+    <div class = "note" id = "{{_id}}" style = "font-size:{{importance}}%; color: #{{color}}">
+        {{text}}
+        <span class = "fly note" style = "display: inline-block; font-size: {{importance_fix}}%">
+        {{#if mouseOver}}
+            <a class = "nolink important">+</a>
+            <a class = "nolink unimportant">-</a>
+            {{#if isCreator}}
+                <a class = "nolink remove">remove</a>
+            {{/if}}
+        {{/if}}
+        </span>
+    </div>
+</template>
