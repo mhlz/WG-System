@@ -43,7 +43,7 @@ function sendAllNotifications() {
 
 function sendNotification(to, text) {
     Email.send({
-        to: "trigger@ifttt.com",
+        to: "trigger@recipe.fttt.com",
         from: "bestWgEUW@gmail.com",
         subject: "Notification for " + to,
         text: to + " " + text
